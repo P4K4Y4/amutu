@@ -3,20 +3,20 @@ header('Content-Type: application/json'); // Ensure JSON response
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get search term and filters from POST data
-    $searchTerm = escapeshellarg($_POST['search_term'] ?? '');
-    $platform = escapeshellarg($_POST['platform'] ?? 'all');
-    $type = escapeshellarg($_POST['type'] ?? 'all');
-    $dateRange = escapeshellarg($_POST['date_range'] ?? '');
-    $author = escapeshellarg($_POST['author'] ?? '');
+    $searchTerm = $_POST['search_term'] ?? '';
+    $platform = $_POST['platform'] ?? 'all';
+    $type = $_POST['type'] ?? 'all';
+    $dateRange = $_POST['date_range'] ?? '';
+    $author = $_POST['author'] ?? '';
 
     // Validate search term
-    if (empty(trim($_POST['search_term']))) {
+    if (empty(trim($searchTerm))) {
         echo json_encode(["status" => "error", "message" => "Search term cannot be empty."]);
         exit;
     }
 
     // Construct the searchsploit command
-    $command = "searchsploit --json $searchTerm";
+    $command = "searchsploit --json " . escapeshellarg($searchTerm);
     $output = shell_exec($command);
 
     if ($output === null) {
@@ -34,16 +34,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Filter results based on additional criteria
     $results = [];
     foreach ($data['RESULTS_EXPLOIT'] as $exploit) {
-        if (($platform === "'all'" || stripos($exploit['platform'], trim($_POST['platform'])) !== false) &&
-            ($type === "'all'" || stripos($exploit['type'], trim($_POST['type'])) !== false) &&
-            ($author === "''" || stripos($exploit['author'] ?? '', trim($_POST['author'])) !== false)) {
-                
+        $matchesPlatform = ($platform === 'all' || stripos($exploit['Platform'] ?? '', $platform) !== false);
+        $matchesType = ($type === 'all' || stripos($exploit['Type'] ?? '', $type) !== false);
+        $matchesAuthor = (empty($author) || stripos($exploit['Author'] ?? '', $author) !== false);
+
+        if ($matchesPlatform && $matchesType && $matchesAuthor) {
             $results[] = [
-                "id" => $exploit['id'] ?? 'N/A',
-                "title" => $exploit['title'] ?? 'N/A',
-                "platform" => $exploit['platform'] ?? 'N/A',
-                "type" => $exploit['type'] ?? 'N/A',
-                "path" => $exploit['path'] ?? 'N/A'
+                "id" => $exploit['ID'] ?? 'N/A',
+                "title" => $exploit['Title'] ?? 'N/A',
+                "platform" => $exploit['Platform'] ?? 'N/A',
+                "type" => $exploit['Type'] ?? 'N/A',
+                "path" => $exploit['Path'] ?? 'N/A'
             ];
         }
     }
