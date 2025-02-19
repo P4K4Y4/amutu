@@ -2,44 +2,63 @@
 header('Content-Type: application/json'); // Ensure JSON response
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $target = $_POST['target'];
-    $scan_type = $_POST['scan_type'];
+    // Validate and sanitize inputs
+    $target = filter_input(INPUT_POST, 'target', FILTER_SANITIZE_STRING);
+    $scan_type = filter_input(INPUT_POST, 'scan_type', FILTER_SANITIZE_STRING);
 
-    // Validate target input (basic example)
+    // Validate target input (basic example for IP/hostname)
     if (!preg_match('/^[a-zA-Z0-9\.\-]+$/', $target)) {
         echo json_encode(["status" => "error", "message" => "Invalid target input."]);
         exit;
     }
 
-    // Build Nmap command based on scan type
-    $command = "nmap";
-    if ($scan_type === "quick") {
-        $command .= " -T4 -F";
-    } elseif ($scan_type === "full") {
-        $command .= " -A";
-    } elseif ($scan_type === "custom") {
-        // Add custom options
-        $command .= " -p 1-1000 -O -sV";
+    // Validate scan type
+    $allowed_scan_types = ["quick", "full", "custom"];
+    if (!in_array($scan_type, $allowed_scan_types)) {
+        echo json_encode(["status" => "error", "message" => "Invalid scan type."]);
+        exit;
     }
-    $command .= " $target";
 
-    // Run Nmap command
-    exec($command, $output, $return_var);
+    // Build Nmap command
+    $command = ["nmap"];
+    switch ($scan_type) {
+        case "quick":
+            $command[] = "-T4";
+            $command[] = "-F";
+            break;
+        case "full":
+            $command[] = "-A";
+            break;
+        case "custom":
+            $command[] = "-p";
+            $command[] = "1-1000";
+            $command[] = "-O";
+            $command[] = "-sV";
+            break;
+    }
+    $command[] = escapeshellarg($target); // Sanitize target input
+
+    // Execute Nmap command
+    exec(implode(" ", $command), $output, $return_var);
 
     // Check if Nmap command failed
     if ($return_var !== 0) {
-        echo json_encode(["status" => "error", "message" => "Nmap command failed. Ensure Nmap is installed and accessible."]);
+        echo json_encode([
+            "status" => "error",
+            "message" => "Nmap command failed. Ensure Nmap is installed and accessible.",
+            "output" => $output // Include Nmap output for debugging
+        ]);
         exit;
     }
 
     // Parse Nmap output to extract results
     $scan_results = [];
     foreach ($output as $line) {
-        if (preg_match('/^(\d+\/\w+)\s+(\w+)\s+([\w\-]+)/', $line, $matches)) {
+        if (preg_match('/^(\d+\/\w+)\s+(\w+)\s+([\w\-\s]+)/', $line, $matches)) {
             $scan_results[] = [
                 "port" => $matches[1],
                 "state" => $matches[2],
-                "service" => $matches[3]
+                "service" => trim($matches[3])
             ];
         }
     }
