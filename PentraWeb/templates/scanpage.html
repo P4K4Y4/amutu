@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PentraWeb - Scan</title>
+    <link rel="stylesheet" href="../Static/css/homepage.css">
+    <link rel="stylesheet" href="../Static/css/scanpage.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <h1>PentraWeb</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="homepage.html">Home</a></li>
+                <li><a href="scanpage.html" style="color: aquamarine;">Scan</a></li>
+                <li><a href="reportpage.html">Reports</a></li>
+                <li><a href="toolspage.html">Tools</a></li>
+                <li><a href="aboutpage.html">About</a></li>
+                <li><a href="loginpage.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <!-- Main Section -->
+    <main>
+        <section class="scan-input">
+            <h2>Start a New Scan</h2>
+            <label for="target">Enter Target URL or IP Address:</label>
+            <input type="text" id="target" placeholder="e.g., example.com or 192.168.1.1">
+
+            <label for="scan-type">Select Scan Type:</label>
+            <select id="scan-type">
+                <option value="quick">Quick Scan</option>
+                <option value="full">Full Scan</option>
+                <option value="custom">Custom Scan</option>
+            </select>
+
+            <button id="start-scan" class="btn">Start Scan</button>
+        </section>
+
+
+        <!-- Scan Progress Section -->
+        <section class="scan-progress">
+            <h3>Scan Progress</h3>
+            <div id="progress-bar" class="progress-bar">
+                <div class="progress" style="width: 0%;"></div>
+            </div>
+            <p id="status-message">Waiting to start scan...</p>
+        </section>
+
+
+        <!-- Scan Results Section -->
+        <section class="scan-results">
+            <h3>Scan Results</h3>
+            <table id="results-table">
+                <thead>
+                    <tr>
+                        <th>Vulnerability</th>
+                        <th>Severity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Results will be populated here -->
+                </tbody>
+            </table>
+            <button id="generate-report" class="btn">Generate Report</button>
+        </section>
+    </main>
+
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="contact-info">
+            <p>Contact Information</p>
+            <p>Email: support@pentraweb.com</p>
+        </div>
+        <div class="legal">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-of-use.html">Terms of Use</a>
+        </div>
+    </footer>
+
+</body>
+</html>

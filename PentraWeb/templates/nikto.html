@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PentraWeb - Nikto Web Vulnerability Scanner</title>
+    <link rel="stylesheet" href="../Static/css/homepage.css"> <!-- Link to your main CSS file -->
+    <link rel="stylesheet" href="../Static/css/nikto.css"> <!-- Link to the Nikto Tool CSS file -->
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <h1>PentraWeb</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="homepage.html">Home</a></li>
+                <li><a href="scanpage.html">Scan</a></li>
+                <li><a href="reportpage.html">Reports</a></li>
+                <li><a href="toolspage.html" style="color: aquamarine;">Tools</a></li>
+                <li><a href="aboutpage.html">About</a></li>
+                <li><a href="loginpage.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <!-- Main Section -->
+    <main>
+        <section class="nikto-tool">
+            <h2>Nikto Web Vulnerability Scanner</h2>
+            <p>Enter the target URL and configure your Nikto scan options below.</p>
+
+            <form id="nikto-form">
+                <label for="target-url">Target URL:</label>
+                <input type="text" id="target-url" placeholder="Enter target, e.g., https://example.com" required>
+
+                <label for="scan-type">Select Scan Type:</label>
+                <select id="scan-type">
+                    <option value="default">Default Scan</option>
+                    <option value="full">Full Scan</option>
+                    <option value="custom">Custom Scan</option>
+                </select>
+
+                <div id="custom-options" style="display: none;">
+                    <h3>Custom Scan Options</h3>
+                    <label><input type="checkbox" id="enable-ssl"> Enable SSL Testing</label><br>
+                    <label><input type="checkbox" id="known-vulns"> Test for Known Vulnerabilities</label><br>
+                    <label><input type="checkbox" id="bypass-headers"> Bypass Security Headers</label><br>
+                    <label><input type="checkbox" id="user-agent"> Enable User-Agent Spoofing</label><br>
+                    <label><input type="checkbox" id="enumerate-subdomains"> Enumerate Subdomains</label><br>
+                    <label for="custom-port">Custom Port:</label>
+                    <input type="text" id="custom-port" placeholder="e.g., 80, 443, 8080">
+                </div>
+
+                <h3>Advanced Options</h3>
+                <label for="scan-intensity">Scan Intensity:</label>
+                <select id="scan-intensity">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+                <label><input type="checkbox" id="verbose-output"> Verbose Output</label><br>
+                <label><input type="checkbox" id="enable-proxy"> Enable Proxy Support</label><br>
+                <label><input type="checkbox" id="save-log"> Save Scan Log</label><br>
+
+                <button type="submit" class="btn">Run Scan</button>
+            </form>
+
+            <div id="scan-progress" style="display: none;">
+                <p>Scanning in progress...</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 0%;"></div>
+                </div>
+            </div>
+
+   
+        </section>
+        <div id="scan-results" style="display: none;">
+            <h3>Scan Results</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>URL</th>
+                        <th>Vulnerability</th>
+                        <th>CVE Reference</th>
+                        <th>Severity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>https://example.com</td>
+                        <td>Outdated Apache Version Detected</td>
+                        <td>CVE-2022-XXXXX</td>
+                        <td>High</td>
+                    </tr>
+                    <!-- More results can be added here -->
+                </tbody>
+            </table>
+            <button class="btn" id="save-results">Save Results</button>
+        </div>
+    </main>
+
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="contact-info">
+            <p>Contact Information</p>
+            <p>Email: support@pentraweb.com</p>
+        </div>
+        <div class="legal">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-of-use.html">Terms of Use</a>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript to handle form submission and display options
+        document.getElementById('scan-type').addEventListener('change', function() {
+            const customOptions = document.getElementById('custom-options');
+            if (this.value === 'custom') {
+                customOptions.style.display = 'block';
+            } else {
+                customOptions.style.display = 'none';
+            }
+        });
+
+        document.getElementById('nikto-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            document.getElementById('scan-progress').style.display = 'block';
+            // Simulate scan progress
+            let progress = 0;
+            const progressBar = document.querySelector('.progress');
+            const interval = setInterval(function() {
+                if (progress < 100) {
+                    progress += 10; // Increment progress
+                    progressBar.style.width = progress + '%';
+                } else {
+                    clearInterval(interval);
+                    document.getElementById('scan-results').style.display = 'block'; // Show results
+                    document.getElementById('scan-progress').style.display = 'none'; // Hide progress
+                }
+            }, 500); // Simulate scan duration
+        });
+    </script>
+
+</body>
+</html>

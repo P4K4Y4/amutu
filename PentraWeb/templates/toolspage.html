@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PentraWeb - Tools</title>
+    <link rel="stylesheet" href="../Static/css/homepage.css">
+    <link rel="stylesheet" href="../Static/css/toolspage.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <h1>PentraWeb</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="homepage.html">Home</a></li>
+                <li><a href="scanpage.html">Scan</a></li>
+                <li><a href="reportpage.html">Reports</a></li>
+                <li><a href="toolspage.html" style="color: aquamarine;">Tools</a></li>
+                <li><a href="aboutpage.html">About</a></li>
+                <li><a href="loginpage.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <!-- Main Section -->
+    <main>
+        <section class="tool-categories">
+            <h2>Select a Tool</h2>
+            <div class="tool-card" onclick="showToolInterface('vulnerability-scanner')">
+                <h3>Scanners</h3>
+            </div>
+            <div class="tool-card" onclick="showToolInterface('exploit-finder')">
+                <h3>Exploits</h3>
+            </div>
+            <div class="tool-card" onclick="showToolInterface('password-cracker')">
+                <h3>Password Cracker</h3>
+            </div>
+            <a href="payloads.html" style="none"><div class="tool-card">
+                <h3>Payloads</h3>
+                </div></a>
+            <!-- Add more tools as needed -->
+        </section>
+
+
+        <!-- Tool Interface Section -->
+        <section class="tool-interface" id="tool-interface" style="display: none;">
+            <h3 id="tool-title">Tool Interface</h3>
+            <div id="tool-content">
+                <!-- Specific tool interface will be populated here -->
+            </div>
+            <button class="btn" id="close-tool">Close Tool</button>
+        </section>
+    </main>
+
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="contact-info">
+            <p>Contact Information</p>
+            <p>Email: support@pentraweb.com</p>
+        </div>
+        <div class="legal">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-of-use.html">Terms of Use</a>
+        </div>
+    </footer>
+
+    <script>
+        function showToolInterface(tool) {
+            const toolContent = document.getElementById('tool-content');
+            const toolTitle = document.getElementById('tool-title');
+            const toolInterface = document.getElementById('tool-interface');
+
+            // Clear previous content
+            toolContent.innerHTML = '';
+
+            // Populate tool-specific interface
+            if (tool === 'vulnerability-scanner') {
+                toolTitle.innerText = 'Scanners';
+                toolContent.innerHTML = `
+                    <!-- <label for="target-url">Enter Target URL:</label>
+                    <input type="text" id="target-url" placeholder="e.g., example.com">
+                    <button class="btn">Scan</button> -->
+
+                    <h2>Select a Tool</h2>
+                    <a href="nmap.html" style="none"><div class="tool-card">
+                    <h3>Nmap</h3>
+                    </div></a>
+
+                    <a href="nikto.html" style="none"><div class="tool-card">
+                    <h3>Nikto</h3>
+                    </div></a>
+
+                    <a href="wapiti.html" style="none"><div class="tool-card">
+                    <h3>Wapiti</h3>
+                    </div></a>
+
+                    <a href="cloudsploit.html" style="none"><div class="tool-card">
+                    <h3>CloudSploit</h3>
+                    </div></a>
+
+                `;
+            } else if (tool === 'exploit-finder') {
+                toolTitle.innerText = 'Exploits';
+                toolContent.innerHTML = `
+                    <h2>Select a Tool</h2>
+                    <a href="sqlmap.html" style="none"><div class="tool-card">
+                    <h3>SQLMap</h3>
+                    </div></a>
+                `;
+            } else if (tool === 'password-cracker') {
+                toolTitle.innerText = 'Password Cracker';
+                toolContent.innerHTML = `
+                    <h2>Select a Tool</h2>
+                    <a href="jhontheripper.html" style="none"><div class="tool-card">
+                    <h3>Jhon The Ripper</h3>
+                    </div></a>
+
+                    <a href="hydra.html" style="none"><div class="tool-card">
+                    <h3>Hydra</h3>
+                    </div></a>
+
+                    <a href="hashcat.html" style="none"><div class="tool-card">
+                    <h3>Hashcat</h3>
+                    </div></a>
+                `;
+            }
+
+            else if (tool === 'Payloads') {
+                toolTitle.innerText = 'Paylods';
+                toolContent.innerHTML = `
+                    <h2>Select a Tool</h2>
+                    <a href="payloads.html" style="none"><div class="tool-card">
+                    <h3>Payloads</h3>
+                    </div></a>
+                `;
+            }
+
+            // Show the tool interface
+            toolInterface.style.display = 'block';
+        }
+
+        document.getElementById('close-tool').onclick = function() {
+            document.getElementById('tool-interface').style.display = 'none';
+        };
+    </script>
+
+</body>
+</html>

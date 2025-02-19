@@ -1,0 +1,77 @@
+/* Report List Styles */
+.report-list {
+    margin: 20px auto;
+    max-width: 800px; /* Limit width for better fit */
+    text-align: left;
+}
+
+#reports-table {
+    width: 100%;
+    border-collapse: collapse; /* Remove space between cells */
+}
+
+#reports-table th, 
+#reports-table td {
+    border: 1px solid #444; /* Border for table cells */
+    padding: 10px;
+    text-align: left;
+}
+
+#reports-table th {
+    background-color: #1f1f1f; /* Dark background for header */
+}
+
+#reports-table tr:nth-child(even) {
+    background-color: #222; /* Alternate row color */
+}
+
+/* Report Details Styles */
+.report-details {
+    margin: 20px auto;
+    max-width: 800px; /* Limit width for better fit */
+    text-align: left;
+}
+
+#details-content {
+    background-color: #1f1f1f; /* Dark background for details */
+    padding:  20px;
+    border-radius: 5px;
+    color: #e0e0e0; /* Light text color */
+}
+
+#close-details {
+    margin-top: 20px; /* Space above the close button */
+}
+/* Button Styles */
+.btn {
+    background-color: #1abc9c; /* Button background color */
+    color: #fff; /* Button text color */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.btn:hover {
+    background-color: #16a085; /* Darker shade on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    #reports-table, 
+    #reports-table th, 
+    #reports-table td {
+        display: block; /* Stack table cells on small screens */
+        width: 100%; /* Full width for better readability */
+    }
+
+    #reports-table th {
+        position: absolute; /* Position header cells for accessibility */
+        left: -9999px; /* Hide off-screen */
+    }
+
+    .report-list {
+        margin: 10px; /* Reduce margin on small screens */
+    }
+}

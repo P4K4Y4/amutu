@@ -1,0 +1,84 @@
+.john-the-ripper-tool {
+    background-color: #34495e; /* Dark background for the tool section */
+    color: #ecf0f1; /* Light text color */
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 500px; /* Maximum width for the content */
+    margin: auto; /* Center the content */
+}
+
+h2 {
+    text-align: center; /* Center the main heading */
+}
+
+h3 {
+    margin-top: 20px; /* Space above subheadings */
+}
+
+label {
+    display: block; /* Block display for labels */
+    margin-top: 10px; /* Space above labels */
+}
+
+input[type="text"], input[type="file"], select {
+    width: 90%; /* Full width for input fields */
+    padding: 10px; /* Padding for input fields */
+    margin-top: 5px; /* Space above input fields */
+    border: 1px solid #bdc3c7; /* Border for input fields */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.btn {
+    background-color: #e67e22; /* Button background color */
+    color: white; /* Button text color */
+    padding: 10px; /* Padding for button */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    margin-top: 15px; /* Space above the button */
+    width: 90%; /* Full width for button */
+}
+
+.btn:hover {
+    background-color: #d35400; /* Darker shade on hover */
+}
+
+.progress-bar {
+    background-color: #bdc3c7; /* Background for progress bar */
+    border-radius: 5px; /* Rounded corners */
+    height: 20px; /* Height of the progress bar */
+    margin-top: 10px; /* Space above progress bar */
+}
+
+.progress {
+    background-color: #e67e22; /* Progress color */
+    height: 90%; /* Full height */
+    border-radius: 5px; /* Rounded corners */
+}
+
+table {
+    width: 100%; /* Full width for table */
+    margin-top: 20px; /* Space above table */
+    border-collapse: collapse; /* Collapse borders */
+}
+
+th, td {
+    border: 1px solid #bdc3c7; /* Border for table cells */
+    padding: 10px; /* Padding for table cells */
+    text-align: left; /* Align text to the left */
+}
+
+th {
+    background-color: #2c3e50; /* Dark background for header */
+    color: #ecf0f1; /* Light text color for header */
+}
+
+td {
+    background-color: #34495e; /* Dark background for table cells */
+    color: #ecf0f1; /* Light text color for table cells */
+}
+
+.warning {
+    color: #e74c3c; /* Warning text color */
+    margin-top: 20px; /* Space above warning */
+}

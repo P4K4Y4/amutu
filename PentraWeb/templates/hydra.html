@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PentraWeb - Hydra Online Password Cracker</title>
+    <link rel="stylesheet" href="../Static/css/homepage.css"> <!-- Link to your main CSS file -->
+    <link rel="stylesheet" href="../Static/css/hydra.css"> <!-- Link to the Hydra Tool CSS file -->
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <h1>PentraWeb</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="homepage.html">Home</a></li>
+                <li><a href="scanpage.html">Scan</a></li>
+                <li><a href="reportpage.html">Reports</a></li>
+                <li><a href="toolspage.html" style="color: aquamarine;">Tools</a></li>
+                <li><a href="aboutpage.html">About</a></li>
+                <li><a href="loginpage.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <!-- Main Section -->
+    <main>
+        <section class="hydra-tool">
+            <h2>Hydra Online Password Cracker</h2>
+            <p>Enter target details and select authentication parameters to start the attack.</p>
+
+            <form id="hydra-form">
+                <label for="target">Target IP/Domain:</label>
+                <input type="text" id="target" placeholder="Enter target, e.g., 192.168.1.100 or example.com" required>
+
+                <label for="auth-service">Select Authentication Service:</label>
+                <select id="auth-service">
+                    <option value="ssh">SSH</option>
+                    <option value="ftp">FTP</option>
+                    <option value="http">HTTP</option>
+                    <option value="rdp">RDP</option>
+                    <option value="smtp">SMTP</option>
+                    <option value="custom">Custom</option>
+                </select>
+
+                <label for="username">Username(s):</label>
+                <input type="file" id="username" accept=".txt" placeholder="Upload a username list">
+
+                <label for="password">Password(s):</label>
+                <input type="file" id="password" accept=".txt" placeholder="Upload a password list">
+
+                <label for="attack-type">Select Attack Type:</label>
+                <select id="attack-type">
+                    <option value="dictionary">Dictionary Attack</option>
+                    <option value="brute-force">Brute Force</option>
+                    <option value="custom">Custom Attack</option>
+                </select>
+
+                <h3>Advanced Options</h3>
+                <label for="threads">Threads:</label>
+                <select id="threads">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="4">4</option>
+                    <option value="8">8</option>
+                    <option value="16">16</option>
+                    <option value="32">32</option>
+                    <option value="64">64</option>
+                </select>
+                <label><input type="checkbox" id="verbose-mode"> Enable Verbose Mode</label><br>
+                <label><input type="checkbox" id="save-results"> Save Results to File</label><br>
+
+                <button type="submit" class="btn">Start Attack</button>
+            </form>
+
+            <div id="attack-progress" style="display: none;">
+                <p>Cracking passwords...</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            
+        </section>
+
+        <div id="attack-results" style="display: none;">
+            <h3>Results</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>Service</th>
+                        <th>Time Taken</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>root</td>
+                        <td>letmein</td>
+                        <td>SSH</td>
+                        <td>3 minutes</td>
+                    </tr>
+                    <!-- More results can be added here -->
+                </tbody>
+            </table>
+            <button class="btn" id="save-results">Save Results</button>
+            <button class="btn" id="try-another-target">Try Another Target</ button>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="contact-info">
+            <p>Contact Information</p>
+            <p>Email: support@pentraweb.com</p>
+        </div>
+        <div class="legal">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-of-use.html">Terms of Use</a>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('hydra-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Gather input values
+            const target = document.getElementById('target').value;
+            const authService = document.getElementById('auth-service').value;
+            const usernameFile = document.getElementById('username').files[0];
+            const passwordFile = document.getElementById('password').files[0];
+            const attackType = document.getElementById('attack-type').value;
+            const threads = document.getElementById('threads').value;
+            const verboseMode = document.getElementById('verbose-mode').checked;
+            const saveResults = document.getElementById('save-results').checked;
+
+            // Show attack progress
+            document.getElementById('attack-progress').style.display = 'block';
+
+            // Simulate attack process (this would be replaced with actual logic)
+            setTimeout(() => {
+                document.getElementById('attack-progress').style.display = 'none';
+                document.getElementById('attack-results').style.display = 'block';
+            }, 3000); // Simulate a 3-second attack process
+        });
+    </script>
+
+</body>
+</html>

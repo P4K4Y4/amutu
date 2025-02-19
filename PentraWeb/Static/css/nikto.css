@@ -1,0 +1,78 @@
+.nikto-tool {
+    background-color: #1f1f1f; /* Dark background for the tool section */
+    color: #e0e0e0; /* Light text color */
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 500px; /* Maximum width for the content */
+    margin: auto; /* Center the content */
+}
+
+h2 {
+    text-align: center; /* Center the main heading */
+}
+
+h3 {
+    margin-top: 20px; /* Space above subheadings */
+}
+
+label {
+    display: block; /* Block display for labels */
+    margin-top: 10px; /* Space above labels */
+}
+
+input[type="text"], select {
+    width: 90%; /* Full width for input fields */
+    padding: 10px; /* Padding for input fields */
+    margin-top: 5px; /* Space above input fields */
+    border: 1px solid #ccc; /* Border for input fields border-radius: 5px; /* Rounded corners */
+}
+
+.btn {
+    background-color: #007bff; /* Button background color */
+    color: white; /* Button text color */
+    padding: 10px; /* Padding for button */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    margin-top: 15px; /* Space above the button */
+    width: 90%; /* Full width for button */
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.progress-bar {
+    background-color: #ccc; /* Background for progress bar */
+    border-radius: 5px; /* Rounded corners */
+    height: 20px; /* Height of the progress bar */
+    margin-top: 10px; /* Space above progress bar */
+}
+
+.progress {
+    background-color: #007bff; /* Progress color */
+    height: 90%; /* Full height of the progress bar */
+    border-radius: 5px; /* Rounded corners */
+    width: 0%; /* Initial width */
+}
+
+table {
+    width: 100%; /* Full width for the table */
+    border-collapse: collapse; /* Collapse borders */
+    margin-top: 20px; /* Space above the table */
+}
+
+th, td {
+    border: 1px solid #ccc; /* Border for table cells */
+    padding: 10px; /* Padding for table cells */
+    text-align: left; /* Left align text */
+}
+
+th {
+    background-color: #007bff; /* Header background color */
+    color: white; /* Header text color */
+}
+
+#custom-options {
+    margin-top: 20px; /* Space above custom options */
+}

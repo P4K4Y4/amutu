@@ -1,0 +1,70 @@
+/* About Us Styles */
+.about-us {
+    margin: 20px auto;
+    max-width: 800px; /* Limit width for better fit */
+    text-align: left;
+}
+
+.about-us p {
+    line-height: 1.6; /* Improved readability */
+}
+
+/* Team Styles */
+.team {
+    margin: 20px auto;
+    max-width: 800px; /* Limit width for better fit */
+    text-align: left;
+}
+
+.team-member {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Space between team members */
+}
+
+.team-photo {
+    width: 80px; /* Fixed width for team photos */
+    height: 80px; /* Fixed height for team photos */
+    border-radius: 50%; /* Circular photos */
+    margin-right: 15px; /* Space between photo and text */
+}
+
+/* Contact Information Styles */
+.contact-infoa {
+    margin: 20px auto;
+    max-width: 800px; /* Limit width for better fit */
+    text-align: left;
+}
+
+#contact-form {
+    display: flex;
+    flex-direction: column; /* Stack form elements */
+}
+
+#contact-form label {
+    margin-top: 10px; /* Space above labels */
+}
+
+#contact-form input, 
+#contact-form textarea {
+    padding: 10px; /* Padding for input fields */
+    margin-top: 5px; /* Space above input fields */
+    border: 1px solid #ccc; /* Border for input fields */
+    border-radius: 5px; /* Rounded corners */
+}
+
+#contact-form .btn {
+    margin-top: 15px; /* Space above the button */
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    .team-member {
+        flex-direction: column; /* Stack photo and text on small screens */
+        align-items: flex-start; /* Align items to the start */
+    }
+
+    .team-photo {
+        margin-bottom: 10px; /* Space below photo */
+    }
+}
