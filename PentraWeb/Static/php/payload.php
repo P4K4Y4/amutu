@@ -1,4 +1,6 @@
 <?php
+ob_start(); // Start output buffering
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Define error log file
     $error_log_file = "/home/dum1ya/Desktop/payload_debug.log";
@@ -53,9 +55,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     log_error("Command output: " . $output);
 
     // Verify file creation
-    if (!file_exists($output_file) || !is_readable($output_file)) {
-        log_error("Failed to generate the payload at: $output_file");
-        die("Failed to generate the payload. Check debug log.");
+    if (!file_exists($output_file)) {
+        log_error("File does not exist: $output_file");
+        die("File does not exist.");
+    }
+    if (!is_readable($output_file)) {
+        log_error("File is not readable: $output_file");
+        die("File is not readable.");
     }
 
     log_error("Payload generated successfully: $output_file");
@@ -64,6 +70,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     header('Content-Type: application/octet-stream');
     header('Content-Disposition: attachment; filename="' . basename($output_file) . '"');
     header('Content-Length: ' . filesize($output_file));
+
+    // Debugging: Check if headers are sent
+    if (headers_sent()) {
+        log_error("Headers already sent. Cannot download file.");
+        die("Headers already sent. Cannot download file.");
+    }
+
+    // Send the file
     readfile($output_file);
 
     // Cleanup: Delete file after download
