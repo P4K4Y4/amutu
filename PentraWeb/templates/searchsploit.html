@@ -101,4 +101,51 @@
     </footer>
 
 </body>
+
+    <script>
+
+        document.getElementById('search-button').addEventListener('click', function() {
+    const searchTerm = document.getElementById('search-term').value;
+    const platform = document.getElementById('platform').value;
+    const type = document.getElementById('type').value;
+    const dateRange = document.getElementById('date-range').value;
+    const author = document.getElementById('author').value;
+
+    // Make a POST request to the PHP script
+    fetch('../Static/php/searchsploit.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `search_term=${encodeURIComponent(searchTerm)}&platform=${encodeURIComponent(platform)}&type=${encodeURIComponent(type)}&date_range=${encodeURIComponent(dateRange)}&author=${encodeURIComponent(author)}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            // Clear previous results
+            const tbody = document.getElementById('results-table-body');
+            tbody.innerHTML = '';
+
+            // Populate the table with new results
+            data.results.forEach(exploit => {
+                const row = `<tr>
+                    <td>${exploit.id}</td>
+                    <td>${exploit.title}</td>
+                    <td>${exploit.platform}</td>
+                    <td>${exploit.type}</td>
+                    <td><a href="${exploit.download_url}" target="_blank">Download</a></td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+        } else {
+            alert(data.message); // Show error message
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while fetching results.');
+    });
+});
+
+    </script>
 </html>
