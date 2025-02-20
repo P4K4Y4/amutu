@@ -164,7 +164,7 @@
             }
         });
 
-        document.getElementById('sqlmap-form').addEventListener('submit', function(event) {
+document.getElementById('sqlmap-form').addEventListener('submit', function(event) {
     event.preventDefault();
     
     const formData = {
@@ -190,66 +190,6 @@
     document.getElementById('scan-progress').style.display = 'block';
 
     fetch('../Static/php/sqlmap.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Hide progress bar
-        document.getElementById('scan-progress').style.display = 'none';
-
-        if (data.status === "success") {
-            // Display results
-            const tbody = document.querySelector('#scan-results tbody');
-            tbody.innerHTML = ''; // Clear previous results
-            data.results.forEach(result => {
-                const row = `<tr>
-                    <td>${result.parameter}</td>
-                    <td>${result.type}</td>
-                    <td>${result.payload}</td>
-                    <td>${result.database}</td>
-                    <td>${result.severity}</td>
-                </tr>`;
-                tbody.innerHTML += row;
-            });
-            document.getElementById('scan-results').style.display = 'block';
-        } else {
-            alert(data.message); // Show error message
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred while running the scan.');
-    });
-});document.getElementById('sqlmap-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    
-    const formData = {
-        target_url: document.getElementById('target-url').value,
-        scan_type: document.getElementById('scan-type').value,
-        db_type: document.getElementById('db-type').value,
-        login_url: document.getElementById('login-url').value,
-        session_cookie: document.getElementById('session-cookie').value,
-        custom_headers: document.getElementById('custom-headers').value,
-        detection_level: document.getElementById('detection-level').value,
-        scan_speed: document.getElementById('scan-speed').value,
-        'boolean-blind': document.getElementById('boolean-blind').checked,
-        'time-blind': document.getElementById('time-blind').checked,
-        'error-based': document.getElementById('error-based').checked,
-        'union-based': document.getElementById('union-based').checked,
-        'stacked-queries': document.getElementById('stacked-queries').checked,
-        'waf-bypass': document.getElementById('waf-bypass').checked,
-        'use-tor': document.getElementById('use-tor').checked,
-        'save-logs': document.getElementById('save-logs').checked
-    };
-
-    // Show progress bar
-    document.getElementById('scan-progress').style.display = 'block';
-
-    fetch('sqlmap_scan.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
