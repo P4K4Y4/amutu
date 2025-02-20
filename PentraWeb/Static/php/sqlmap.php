@@ -1,96 +1,53 @@
 <?php
-header('Content-Type: application/json'); // Ensure JSON response
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $target_url = escapeshellarg($_POST["target_url"]);
+    $scan_type = $_POST["scan_type"];
+    $db_type = escapeshellarg($_POST["db_type"]);
+    $retrieve_db_names = isset($_POST["retrieve_db_names"]) ? "--dbs" : "";
+    $retrieve_table_names = isset($_POST["retrieve_table_names"]) ? "--tables" : "";
+    $retrieve_column_names = isset($_POST["retrieve_column_names"]) ? "--columns" : "";
+    $dump_table_data = isset($_POST["dump_table_data"]) ? "--dump" : "";
+    $waf_bypass = isset($_POST["waf_bypass"]) ? "--tamper=space2comment" : "";
+    $use_tor = isset($_POST["use_tor"]) ? "--tor" : "";
+    $log_file = "scan_results.txt";
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Define error log file
-    $error_log_file = "/home/dum1ya/Desktop/sqlmap_debug.log";
-    
-    function log_error($message) {
-        global $error_log_file;
-        file_put_contents($error_log_file, date("Y-m-d H:i:s") . " - " . $message . "\n", FILE_APPEND);
-    }
-
-    // Validate and sanitize inputs
-    $target_url = escapeshellarg($_POST['target_url']);
-    $scan_type = $_POST['scan_type'];
-    $db_type = $_POST['db_type'];
-    $login_url = escapeshellarg($_POST['login_url'] ?? '');
-    $session_cookie = escapeshellarg($_POST['session_cookie'] ?? '');
-    $custom_headers = escapeshellarg($_POST['custom_headers'] ?? '');
-    $detection_level = $_POST['detection_level'] ?? 'medium';
-    $scan_speed = $_POST['scan_speed'] ?? 'normal';
-
-    // Validate target URL
-    if (empty(trim($_POST['target_url']))) {
-        echo json_encode(["status" => "error", "message" => "Target URL cannot be empty."]);
-        exit;
-    }
-
-    // Construct the sqlmap command
-    $command = "sqlmap -u $target_url";
-
-    // Add scan type options
-    if ($scan_type === "full") {
-        $command .= " --level=5 --risk=3"; // Full scan with maximum level and risk
-    } elseif ($scan_type === "custom") {
-        $command .= " --level=" . escapeshellarg($detection_level);
-        if (isset($_POST['boolean-blind'])) $command .= " --technique=B";
-        if (isset($_POST['time-blind'])) $command .= " --technique=T";
-        if (isset($_POST['error-based'])) $command .= " --technique=E";
-        if (isset($_POST['union-based'])) $command .= " --technique=U";
-        if (isset($_POST['stacked-queries'])) $command .= " --technique=S";
-    }
-
-    // Add database type
-    $command .= " --dbms=" . escapeshellarg($db_type);
-
-    // Add authentication options
-    if (!empty($login_url)) {
-        $command .= " --login-url=$login_url";
-    }
-    if (!empty($session_cookie)) {
-        $command .= " --cookie=$session_cookie";
-    }
-    if (!empty($custom_headers)) {
-        $command .= " --headers=$custom_headers";
-    }
-
-    // Add scan speed
-    if ($scan_speed === "slow") {
-        $command .= " --delay=5";
-    } elseif ($scan_speed === "fast") {
-        $command .= " --threads=10";
-    }
-
-    // Add advanced options
-    if (isset($_POST['waf-bypass'])) $command .= " --tamper=space2comment";
-    if (isset($_POST['use-tor'])) $command .= " --tor";
-    if (isset($_POST['save-logs'])) $command .= " --output-dir=/home/dum1ya/Desktop/sqlmap_logs";
-
-    // Log command execution
-    log_error("Executing command: $command");
-
-    // Execute command and capture output
-    $output = shell_exec("$command 2>&1");
-    log_error("Command output: " . $output);
-
-    // Parse sqlmap output to extract results
-    $results = [];
-    if (preg_match_all('/Parameter: (\w+)\s+Type: (\w+)\s+Payload: (.+)/', $output, $matches)) {
-        for ($i = 0; $i < count($matches[0]); $i++) {
-            $results[] = [
-                "parameter" => $matches[1][$i],
-                "type" => $matches[2][$i],
-                "payload" => $matches[3][$i],
-                "database" => "example_db", // Placeholder, replace with actual database name
-                "severity" => "Critical" // Placeholder, replace with actual severity
-            ];
+    // Define scan type options
+    $scan_options = "";
+    if ($scan_type == "full") {
+        $scan_options = "--batch --risk=3 --level=5";
+    } elseif ($scan_type == "custom") {
+        if (isset($_POST["boolean_blind"])) {
+            $scan_options .= " --technique=B";
         }
+        if (isset($_POST["time_blind"])) {
+            $scan_options .= " --technique=T";
+        }
+        if (isset($_POST["error_based"])) {
+            $scan_options .= " --technique=E";
+        }
+        if (isset($_POST["union_based"])) {
+            $scan_options .= " --technique=U";
+        }
+        if (isset($_POST["stacked_queries"])) {
+            $scan_options .= " --technique=S";
+        }
+    } else {
+        $scan_options = "--batch --risk=1 --level=1"; // Basic scan
     }
 
-    // Return the results as JSON
-    echo json_encode(["status" => "success", "results" => $results]);
+    // SQLMap command
+    $sqlmap_cmd = "sqlmap -u $target_url --dbms=$db_type $retrieve_db_names $retrieve_table_names $retrieve_column_names $dump_table_data $scan_options $waf_bypass $use_tor > $log_file 2>&1";
+    
+    // Execute command
+    exec($sqlmap_cmd, $output, $return_code);
+
+    // Return results
+    if ($return_code === 0) {
+        echo json_encode(["status" => "success", "message" => "Scan completed. Check scan_results.txt"]);
+    } else {
+        echo json_encode(["status" => "error", "message" => "SQLMap execution failed."]);
+    }
 } else {
-    echo json_encode(["status" => "error", "message" => "Invalid request method."]);
+    echo json_encode(["status" => "error", "message" => "Invalid request."]);
 }
 ?>
