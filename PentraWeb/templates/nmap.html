@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PentraWeb - Nmap Network Scanner</title>
+    <link rel="stylesheet" href="../Static/css/homepage.css"> <!-- Link to your main CSS file -->
+    <link rel="stylesheet" href="../Static/css/nmap.css"> <!-- Link to the Nmap Tool CSS file -->
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <h1>PentraWeb</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="homepage.html" style="color: aquamarine;">Home</a></li>
+                <li><a href="scanpage.html">Scan</a></li>
+                <li><a href="reportpage.html">Reports</a></li>
+                <li><a href="toolspage.html">Tools</a></li>
+                <li><a href="bookspage.html">Books</a></li>
+                <li><a href="ic_scada.html">IC & SCADA</a></li>
+                <li><a href="vulnerable_systems.html">Vulnerable Systems</a></li>
+                <li><a href="online_resources.html">Online Resources</a></li>
+                <li><a href="aboutpage.html">About</a></li>
+                <li><a href="loginpage.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <!-- Main Section -->
+    <main>
+        <section class="nmap-tool">
+            <h2>Nmap Network Scanner</h2>
+            <p>Enter the target and configure your Nmap scan options below.</p>
+
+            <form id="nmap-form" action="../Static/php/nmap.php" method="POST">
+                <label for="target">Target (IP Address or Domain):</label>
+                <input type="text" id="target" placeholder="Enter target, e.g., 192.168.1.1 or example.com" required>
+
+                <label for="scan-type">Select Scan Type:</label>
+                <select id="scan-type">
+                    <option value="quick">Quick Scan</option>
+                    <option value="full">Full Scan</option>
+                    <option value="custom">Custom Scan</option>
+                </select>
+
+                <div id="custom-options" style="display: none;">
+                    <h3>Custom Scan Options</h3>
+                    <label><input type="checkbox" id="ping-scan"> Ping Scan</label><br>
+                    <label><input type="checkbox" id="os-detection"> OS Detection</label><br>
+                    <label><input type="checkbox" id="service-version"> Service Version Detection</label><br>
+                    <label><input type="checkbox" id="aggressive-scan"> Aggressive Scan</label><br>
+                    <label for="port-range">Port Range:</label>
+                    <input type="text" id="port-range" placeholder="e.g., 1-1000">
+                </div>
+
+                <h3>Advanced Options</h3>
+                <label for="timing-template">Timing Template:</label>
+                <select id="timing-template">
+                    <option value="T1">T1 - Paranoid</option>
+                    <option value="T2">T2 - Sneaky</option>
+                    <option value="T3">T3 - Polite</option>
+                    <option value="T4">T4 - Normal</option>
+                    <option value="T5">T5 - Aggressive</option>
+                </select>
+                <button type="submit" class="btn">Run Scan</button>
+            </form>
+
+            <div id="scan-progress" style="display: none;">
+                <p>Scanning in progress...</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <div id="scan-results" style="display: none;">
+                <h3>Scan Results</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Port</th>
+                            <th>Service</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>80</td>
+                            <td>HTTP</td>
+                            <td>Apache</td>
+                        </tr>
+                        <!-- More results can be added here -->
+                    </tbody>
+                </table>
+                <button class="btn" id="save-results">Save Results</button>
+            </div>
+        </section>
+    </main>
+
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="contact-info">
+            <p>Contact Information</p>
+            <p>Email: support@pentraweb.com</p>
+        </div>
+        <div class="legal">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-of-use.html">Terms of Use</a>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript to handle form submission and display options
+        document.getElementById('scan-type').addEventListener('change', function() {
+            const customOptions = document.getElementById('custom-options');
+            if (this.value === 'custom') {
+                customOptions.style.display = 'block';
+            } else {
+                customOptions.style.display = 'none';
+            }
+        });
+
+        document.getElementById('nmap-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const target = document.getElementById('target').value;
+            const scanType = document.getElementById('scan-type').value;
+        
+            // Show progress bar
+            document.getElementById('scan-progress').style.display = 'block';
+        
+            fetch('scan.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `target=${encodeURIComponent(target)}&scan_type=${encodeURIComponent(scanType)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hide progress bar
+                document.getElementById('scan-progress').style.display = 'none';
+        
+                if (data.status === "success") {
+                    // Display results
+                    document.getElementById('scan-results').innerHTML = data.html;
+                    document.getElementById('scan-results').style.display = 'block';
+                } else {
+                    // Show error message
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while running the scan.');
+            });
+        });
+        
+    </script>
+
+</body>
+</html>

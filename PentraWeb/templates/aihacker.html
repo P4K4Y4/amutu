@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PentraWeb - AI H4CK3R</title>
+    <link rel="stylesheet" href="../Static/css/homepage.css">
+    <link rel="stylesheet" href="../Static/css/aihacker.css"> 
+    <link rel="stylesheet" href="../Static/css/chat.css"> 
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <h1>PentraWeb</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="homepage.html" style="color: aquamarine;">Home</a></li>
+                <li><a href="scanpage.html">Scan</a></li>
+                <li><a href="reportpage.html">Reports</a></li>
+                <li><a href="toolspage.html">Tools</a></li>
+                <li><a href="bookspage.html">Books</a></li>
+                <li><a href="ic_scada.html">IC & SCADA</a></li>
+                <li><a href="vulnerable_systems.html">Vulnerable Systems</a></li>
+                <li><a href="online_resources.html">Online Resources</a></li>
+                <li><a href="aboutpage.html">About</a></li>
+                <li><a href="loginpage.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Section -->
+    <main>
+        <section class="chat">
+            <h2>AI H4CK3R</h2>
+            <p>Solutions for your cybersecurity Problems</p>
+
+            <div class="message-container">
+                <div class="message user">
+                    <p>Hello, can you help me with a quick scan?</p>
+                </div>
+                <div class="message bot">
+                    <p>Sure! Please provide the target IP address or domain.</p>
+                </div>
+            </div>
+
+            <div class="input-area">
+                <input type="text" id="user-input" placeholder="Type your message..." required>
+                <button id="send-button">Send</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.getElementById("send-button").addEventListener("click", function() {
+            let userInput = document.getElementById("user-input").value;
+            if (!userInput.trim()) return;
+
+            let chatContainer = document.querySelector(".message-container");
+
+            // Append user message
+            let userMessage = document.createElement("div");
+            userMessage.className = "message user";
+            userMessage.innerHTML = `<p>${userInput}</p>`;
+            chatContainer.appendChild(userMessage);
+
+            // Send request to PHP backend
+            fetch("../Static/php/chat.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: userInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                let botMessage = document.createElement("div");
+                botMessage.className = "message bot";
+                botMessage.innerHTML = `<p>${data.response}</p>`;
+                chatContainer.appendChild(botMessage);
+            })
+            .catch(error => console.error("Error:", error));
+
+            // Clear input field
+            document.getElementById("user-input").value = "";
+        });
+    </script>
+
+</body>
+</html>

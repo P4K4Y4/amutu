@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PentraWeb - Tools</title>
+    <link rel="stylesheet" href="../Static/css/homepage.css">
+    <link rel="stylesheet" href="../Static/css/toolspage.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <h1>PentraWeb</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="homepage.html" style="color: aquamarine;">Home</a></li>
+                <li><a href="scanpage.html">Scan</a></li>
+                <li><a href="reportpage.html">Reports</a></li>
+                <li><a href="toolspage.html">Tools</a></li>
+                <li><a href="bookspage.html">Books</a></li>
+                <li><a href="ic_scada.html">IC & SCADA</a></li>
+                <li><a href="vulnerable_systems.html">Vulnerable Systems</a></li>
+                <li><a href="online_resources.html">Online Resources</a></li>
+                <li><a href="aboutpage.html">About</a></li>
+                <li><a href="loginpage.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <!-- Main Section -->
+    <main>
+        <section class="tool-categories">
+            <h2>Select a Tool</h2>
+            <div class="tool-card" onclick="showToolInterface('Evasion-Tools')">
+                <h3>Evasion Tools</h3>
+            </div>
+            <div class="tool-card" onclick="showToolInterface('CTF-Tools')">
+                <h3>CTF Tools</h3>
+            </div>
+            <div class="tool-card" onclick="showToolInterface('Cloud-Platform-Attack-Tools')">
+                <h3>Cloud Platform Attack Tools</h3>
+            </div>
+            <div class="tool-card" onclick="showToolInterface('Collaboration-Tools')">
+                <h3>Collaboration Tools</h3>
+            </div>
+            <div class="tool-card" onclick="showToolInterface('Exfiltration-Tools')">
+                <h3>Exfiltration Tools</h3>
+            </div>
+            <div class="tool-card" onclick="showToolInterface('File-Format-Analysis-Tools')">
+                <h3>File Format Analysis Tools</h3>
+            </div>
+            <div class="tool-card" onclick="showToolInterface('Hash-Cracking-Tools')">
+                <h3>Hash Cracking Tools</h3>
+            </div>
+            <div class="tool-card" onclick="showToolInterface('Network-Tools')">
+                <h3>Network Tools</h3>
+            </div>
+            <div class="tool-card" onclick="showToolInterface('Network-Scanners-Tools')">
+                <h3>Network Scanners Tools</h3>
+            </div>
+            <div class="tool-card" onclick="showToolInterface('Osint-Tools')">
+                <h3>Osint Tools</h3>
+            </div>
+            <div class="tool-card" onclick="showToolInterface('Priviege-Escalation-Tools')">
+                <h3>Privilege Escalation Tools</h3>
+            </div>
+            <div class="tool-card" onclick="showToolInterface('Reverse-Engineering-Tools')">
+                <h3>Reverse Engineering Tools</h3>
+            </div>
+            <div class="tool-card" onclick="showToolInterface('Side-Channel-Tools')">
+                <h3>Side Channel Tools</h3>
+            </div>
+            <div class="tool-card" onclick="showToolInterface('Social-Engineering-Tools')">
+                <h3>Social Engineering Tools</h3>
+            </div>
+            <div class="tool-card" onclick="showToolInterface('Web-Exploitation-Tools')">
+                <h3>Web Exploitation Tools</h3>
+            </div>
+            
+            <div class="tool-card" onclick="showToolInterface('vulnerability-scanner')">
+                <h3>Scanners</h3>
+            </div>
+            <div class="tool-card" onclick="showToolInterface('exploit-finder')">
+                <h3>Exploits</h3>
+            </div>
+            <div class="tool-card" onclick="showToolInterface('password-cracker')">
+                <h3>Password Cracker</h3>
+            </div>
+            <a href="payloads.html" style="display: none;"><div class="tool-card">
+                <h3>Payloads</h3>
+                </div></a>
+            <!-- Add more tools as needed -->
+        </section>
+
+
+        <!-- Tool Interface Section -->
+        <section class="tool-interface" id="tool-interface" style="display: none;">
+            <h3 id="tool-title">Tool Interface</h3>
+            <div id="tool-content">
+                <!-- Specific tool interface will be populated here -->
+            </div>
+            <button class="btn" id="close-tool">Close Tool</button>
+        </section>
+    </main>
+
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="contact-info">
+            <p>Contact Information</p>
+            <p>Email: support@pentraweb.com</p>
+        </div>
+        <div class="legal">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-of-use.html">Terms of Use</a>
+        </div>
+    </footer>
+
+    <script>
+        function showToolInterface(tool) {
+            const toolContent = document.getElementById('tool-content');
+            const toolTitle = document.getElementById('tool-title');
+            const toolInterface = document.getElementById('tool-interface');
+
+            // Clear previous content
+            toolContent.innerHTML = '';
+
+            // Populate tool-specific interface
+            if (tool === 'vulnerability-scanner') {
+                toolTitle.innerText = 'Scanners';
+                toolContent.innerHTML = `
+                    <!-- <label for="target-url">Enter Target URL:</label>
+                    <input type="text" id="target-url" placeholder="e.g., example.com">
+                    <button class="btn">Scan</button> -->
+
+                    <h2>Select a Tool</h2>
+                    <a href="nmap.html" style="none"><div class="tool-card">
+                    <h3>Nmap</h3>
+                    </div></a>
+
+                    <a href="nikto.html" style="none"><div class="tool-card">
+                    <h3>Nikto</h3>
+                    </div></a>
+
+                    <a href="wapiti.html" style="none"><div class="tool-card">
+                    <h3>Wapiti</h3>
+                    </div></a>
+
+                    <a href="cloudsploit.html" style="none"><div class="tool-card">
+                    <h3>CloudSploit</h3>
+                    </div></a>
+
+                `;
+            } else if (tool === 'exploit-finder') {
+                toolTitle.innerText = 'Exploits';
+                toolContent.innerHTML = `
+                    <h2>Select a Tool</h2>
+                    <a href="sqlmap.html" style="none"><div class="tool-card">
+                    <h3>SQLMap</h3>
+                    </div></a>
+                `;
+            } else if (tool === 'password-cracker') {
+                toolTitle.innerText = 'Password Cracker';
+                toolContent.innerHTML = `
+                    <h2>Select a Tool</h2>
+                    <a href="jhontheripper.html" style="none"><div class="tool-card">
+                    <h3>Jhon The Ripper</h3>
+                    </div></a>
+
+                    <a href="hydra.html" style="none"><div class="tool-card">
+                    <h3>Hydra</h3>
+                    </div></a>
+
+                    <a href="hashcat.html" style="none"><div class="tool-card">
+                    <h3>Hashcat</h3>
+                    </div></a>
+                `;
+            }
+
+            else if (tool === 'Payloads') {
+                toolTitle.innerText = 'Paylods';
+                toolContent.innerHTML = `
+                    <h2>Select a Tool</h2>
+                    <a href="payloads.html" style="none"><div class="tool-card">
+                    <h3>Payloads</h3>
+                    </div></a>
+                `;
+            }
+
+            else if (tool === 'Evasion-Tools') {
+                toolTitle.innerText = 'Evasion Tools';
+                toolContent.innerHTML = `
+                    <h2>Select a Tool</h2>
+                    <a href="AVET.html" style="none"><div class="tool-card">
+                    <h3>AVET</h3>
+                    </div></a>
+
+                    <a href="CarbonCopy.html" style="none"><div class="tool-card">
+                    <h3>CarbonCopy</h3>
+                    </div></a>
+
+                    <a href="Hyperion.html" style="none"><div class="tool-card">
+                    <h3>Hyperion</h3>
+                    </div></a>
+
+                    <a href="Shellter.html" style="none"><div class="tool-card">
+                    <h3>Shellter</h3>
+                    </div></a>
+
+                    <a href="UnibyAv.html" style="none"><div class="tool-card">
+                    <h3>UnibyAv</h3>
+                    </div></a>
+
+                    <a href="Veil.html" style="none"><div class="tool-card">
+                    <h3>Veil</h3>
+                    </div></a>
+
+                    <a href="peCloakCapstone.html" style="none"><div class="tool-card">
+                    <h3>peCloakCapstone</h3>
+                    </div></a>
+
+                    <a href="Amber.html" style="none"><div class="tool-card">
+                    <h3>Amber</h3>
+                    </div></a>
+                `;
+            }
+
+            else if (tool === 'CTF-Tools') {
+                toolTitle.innerText = 'CTF Tools';
+                toolContent.innerHTML = `
+                    <h2>Select a Tool</h2>
+                    <a href="payloads.html" style="none"><div class="tool-card">
+                    <h3>Payloads</h3>
+                    </div></a>
+                `;
+            }
+
+            else if (tool === 'Cloud-Platform-Attack-Tools') {
+                toolTitle.innerText = 'Cloud Platform Attack Tools';
+                toolContent.innerHTML = `
+                    <h2>Select a Tool</h2>
+                    <a href="payloads.html" style="none"><div class="tool-card">
+                    <h3>Payloads</h3>
+                    </div></a>
+                `;
+            } else if (tool === 'Collaboration-Tools') {
+                toolTitle.innerText = 'Collaboration Tools';
+                toolContent.innerHTML = `
+                    <h2>Select a Tool</h2>
+                    <a href="payloads.html" style="none"><div class="tool-card">
+                    <h3>Payloads</h3>
+                    </div></a>
+                `;
+            } else if (tool === 'Exfiltration-Tools') {
+                toolTitle.innerText = 'Exfiltration Tools';
+                toolContent.innerHTML = `
+                    <h2>Select a Tool</h2>
+                    <a href="payloads.html" style="none"><div class="tool-card">
+                    <h3>Payloads</h3>
+                    </div></a>
+                `;
+            } else if (tool === 'File-Format-Analysis-Tools') {
+                toolTitle.innerText = 'File Format Analysis Tools';
+                toolContent.innerHTML = `
+                    <h2>Select a Tool</h2>
+                    <a href="payloads.html" style="none"><div class="tool-card">
+                    <h3>Payloads</h3>
+                    </div></a>
+                `;
+            } else if (tool === 'Hash-Cracking-Tools') {
+                toolTitle.innerText = 'Hash Cracking Tools';
+                toolContent.innerHTML = `
+                    <h2>Select a Tool</h2>
+                    <a href="payloads.html" style="none"><div class="tool-card">
+                    <h3>Payloads</h3>
+                    </div></a>
+                `;
+            } else if (tool === 'Network-Tools') {
+                toolTitle.innerText = 'Network Tools';
+                toolContent.innerHTML = `
+                    <h2>Select a Tool</h2>
+                    <a href="payloads.html" style="none"><div class="tool-card">
+                    <h3>Payloads</h3>
+                    </div></a>
+                `;
+            } else if (tool === 'Network-Scanners-Tools') {
+                toolTitle.innerText = 'Network Scanners Tools';
+                toolContent.innerHTML = `
+                    <h2>Select a Tool</h2>
+                    <a href="payloads.html" style="none"><div class="tool-card">
+                    <h3>Payloads</h3>
+                    </div></a>
+                `;
+            } else if (tool === 'Osint-Tools') {
+                toolTitle.innerText = 'Osint Tools';
+                toolContent.innerHTML = `
+                    <h2>Select a Tool</h2>
+                    <a href="payloads.html" style="none"><div class="tool-card">
+                    <h3>Payloads</h3>
+                    </div></a>
+                `;
+            } else if (tool === 'Priviege-Escalation-Tools') {
+                toolTitle.innerText = 'Privilege Escalation Tools';
+                toolContent.innerHTML = `
+                    <h2>Select a Tool</h2>
+                    <a href="payloads.html" style="none"><div class="tool-card">
+                    <h3>Payloads</h3>
+                    </div></a>
+                `;
+            } else if (tool === 'Reverse-Engineering-Tools') {
+                toolTitle.innerText = 'Reverse Engineering Tools';
+                toolContent.innerHTML = `
+                    <h2>Select a Tool</h2>
+                    <a href="payloads.html" style="none"><div class="tool-card">
+                    <h3>Payloads</h3>
+                    </div></a>
+                `;
+            } else if (tool === 'Side-Channel-Tools') {
+                toolTitle.innerText = 'Side Channel Tools';
+                toolContent.innerHTML = `
+                    <h2>Select a Tool</h2>
+                    <a href="payloads.html" style="none"><div class="tool-card">
+                    <h3>Payloads</h3>
+                    </div></a>
+                `;
+            } else if (tool === 'Social-Engineering-Tools') {
+                toolTitle.innerText = 'Social Engineering Tools';
+                toolContent.innerHTML = `
+                    <h2>Select a Tool</h2>
+                    <a href="payloads.html" style="none"><div class="tool-card">
+                    <h3>Payloads</h3>
+                    </div></a>
+                `;
+            } else if (tool === 'Web-Exploitation-Tools') {
+                toolTitle.innerText = 'Web Exploitation Tools';
+                toolContent.innerHTML = `
+                    <h2>Select a Tool</h2>
+                    <a href="payloads.html" style="none"><div class="tool-card">
+                    <h3>Payloads</h3>
+                    </div></a>
+                `;
+            }
+            // Show the tool interface
+            toolInterface.style.display = 'block';
+        }
+
+        document.getElementById('close-tool').onclick = function() {
+            document.getElementById('tool-interface').style.display = 'none';
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PentraWeb - CloudSploit Cloud Security Scanner</title>
+    <link rel="stylesheet" href="../Static/css/homepage.css"> <!-- Link to your main CSS file -->
+    <link rel="stylesheet" href="../Static/css/cloudsploit.css"> <!-- Link to the CloudSploit Tool CSS file -->
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <h1>PentraWeb</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="homepage.html" style="color: aquamarine;">Home</a></li>
+                <li><a href="scanpage.html">Scan</a></li>
+                <li><a href="reportpage.html">Reports</a></li>
+                <li><a href="toolspage.html">Tools</a></li>
+                <li><a href="bookspage.html">Books</a></li>
+                <li><a href="ic_scada.html">IC & SCADA</a></li>
+                <li><a href="vulnerable_systems.html">Vulnerable Systems</a></li>
+                <li><a href="online_resources.html">Online Resources</a></li>
+                <li><a href="aboutpage.html">About</a></li>
+                <li><a href="loginpage.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <!-- Main Section -->
+    <main>
+        <section class="cloudsploit-tool">
+            <h2>CloudSploit Cloud Security Scanner</h2>
+            <p>Enter your cloud account details and configure your CloudSploit scan options below.</p>
+
+            <form id="cloudsploit-form">
+                <label for="cloud-provider">Select Cloud Provider:</label>
+                <select id="cloud-provider">
+                    <option value="aws">AWS</option>
+                    <option value="azure">Azure</option>
+                    <option value="google-cloud">Google Cloud</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <label for="account-id">Cloud Account ID:</label>
+                <input type="text" id="account-id" placeholder="Enter your cloud account ID" required>
+
+                <label for="access-key">Access Key:</label>
+                <input type="text" id="access-key" placeholder="Enter your API Access Key" required>
+
+                <label for="secret-key">Secret Key:</label>
+                <input type="password" id="secret-key" placeholder="Enter your API Secret Key" required>
+
+                <label><input type="checkbox" id="use-iam-role"> Use IAM Role instead of Access Keys</label><br>
+
+                <label for="scan-type">Select Scan Type:</label>
+                <select id="scan-type">
+                    <option value="basic">Basic Scan (Checks for common misconfigurations)</option>
+                    <option value="full">Full Security Audit (Comprehensive security analysis)</option>
+                    <option value="custom">Custom Scan</option>
+                </select>
+
+                <div id="custom-scan-options" style="display: none;">
+                    <h3>Custom Scan Options</h3>
+                    <label><input type="checkbox" id="public-storage"> Check for Publicly Exposed Storage (S3, Buckets)</label><br>
+                    <label><input type="checkbox" id="weak-iam"> Check for Weak IAM Policies</label><br>
+                    <label><input type="checkbox" id="unrestricted-sg"> Check for Unrestricted Security Groups</label><br>
+                    <label><input type="checkbox" id="expired-ssl"> Check for Expired SSL Certificates</label><br>
+                    <label><input type="checkbox" id="unused-keys"> Check for Unused Access Keys</label><br>
+                    <label><input type="checkbox" id="root-usage"> Check for Root Account Usage</label><br>
+                </div>
+
+                <h3>Advanced Options</h3>
+                <label for="scan-frequency">Scan Frequency:</label>
+                <select id="scan-frequency">
+                    <option value="one-time">One-Time Scan</option>
+                    <option value="daily">Scheduled Scan (Daily)</option>
+                    <option value="weekly">Scheduled Scan (Weekly)</option>
+                    <option value="monthly">Scheduled Scan (Monthly)</option>
+                </select>
+                <label><input type="checkbox" id="email-alerts"> Send Email Alerts for Critical Findings</label><br>
+                <label><input type="checkbox" id="enable-logging"> Enable Logging</label><br>
+                <label><input type="checkbox" id="generate-report"> Generate Compliance Report (CIS, GDPR, ISO 27001)</label><br>
+
+                <button type="submit" class="btn">Run Scan</button>
+            </form>
+
+            <div id="scan-progress" style="display: none;">
+                <p>Scanning cloud environment...</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            
+        </section>
+        <div id="scan-results" style="display: none;">
+            <h3>Scan Results</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Resource</th>
+                        <th>Issue</th>
+                        <th>Severity</th>
+                        <th>Recommendation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>S3 Bucket "company-data"</td>
+                        <td>Publicly Accessible</td>
+                        <td>High</td>
+                        <td>Restrict access via IAM policies</td>
+                    </tr>
+                    <!-- More results can be added here -->
+                </tbody>
+            </table>
+            <button class="btn" id="save-results">Save Results</button>
+            <button class="btn" id="remediate-issues">Remediate Issues</button>
+        </div>
+    </main>
+
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="contact-info">
+            <p>Contact Information</p>
+            <p>Email: support@pentraweb.com</p>
+        </div>
+        <div class="legal">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-of-use.html">Terms of Use</a>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript to handle form submission and display options
+        document.getElementById('scan-type').addEventListener('change', function() {
+            const customScanOptions = document.getElementById('custom-scan-options');
+            if (this.value === 'custom') {
+                customScanOptions.style.display = 'block';
+            } else {
+                customScanOptions.style.display = 'none';
+            }
+        });
+
+        document.getElementById('cloudsploit-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            document.getElementById('scan-progress').style.display = 'block';
+            // Simulate scan progress
+            let progress = 0;
+            const progressBar = document.querySelector('.progress');
+            const interval = setInterval(function() {
+                if (progress < 100) {
+                    progress += 10; // Increment progress
+                    progressBar.style.width = progress + '%';
+                } else {
+                    clearInterval(interval);
+                    document.getElementById('scan-results').style.display = 'block'; // Show results
+                    document.getElementById('scan-progress').style.display = 'none'; // Hide progress
+                }
+            }, 500); // Simulate scan duration
+        });
+    </script>
+
+</body>
+</html>
