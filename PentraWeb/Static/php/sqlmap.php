@@ -1,5 +1,9 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    header("Content-Type: text/event-stream");
+    header("Cache-Control: no-cache");
+    header("Connection: keep-alive");
+
     $target_url = escapeshellarg($_POST["target_url"]);
     $scan_type = $_POST["scan_type"];
     $db_type = escapeshellarg($_POST["db_type"]);
@@ -9,7 +13,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $dump_table_data = isset($_POST["dump_table_data"]) ? "--dump" : "";
     $waf_bypass = isset($_POST["waf_bypass"]) ? "--tamper=space2comment" : "";
     $use_tor = isset($_POST["use_tor"]) ? "--tor" : "";
-    $log_file = "scan_results.txt";
 
     // Define scan type options
     $scan_options = "";
@@ -36,18 +39,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // SQLMap command
-    $sqlmap_cmd = "sqlmap -u $target_url --dbms=$db_type $retrieve_db_names $retrieve_table_names $retrieve_column_names $dump_table_data $scan_options $waf_bypass $use_tor > $log_file 2>&1";
-    
-    // Execute command
-    exec($sqlmap_cmd, $output, $return_code);
+    $sqlmap_cmd = "sqlmap -u $target_url --dbms=$db_type $retrieve_db_names $retrieve_table_names $retrieve_column_names $dump_table_data $scan_options $waf_bypass $use_tor";
 
-    // Return results
-    if ($return_code === 0) {
-        echo json_encode(["status" => "success", "message" => "Scan completed. Check scan_results.txt"]);
+    // Execute command and stream output
+    $descriptorspec = [
+        1 => ["pipe", "r"], // Standard output
+        2 => ["pipe", "w"], // Standard error
+    ];
+    
+    $process = proc_open($sqlmap_cmd, $descriptorspec, $pipes);
+    
+    if (is_resource($process)) {
+        while (!feof($pipes[1])) {
+            $output = fgets($pipes[1]);
+            echo "data: " . trim($output) . "\n\n";
+            ob_flush();
+            flush();
+        }
+        fclose($pipes[1]);
+        fclose($pipes[2]);
+        proc_close($process);
     } else {
-        echo json_encode(["status" => "error", "message" => "SQLMap execution failed."]);
+        echo "data: Error starting SQLMap\n\n";
     }
-} else {
-    echo json_encode(["status" => "error", "message" => "Invalid request."]);
 }
 ?>
