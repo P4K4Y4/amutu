@@ -161,7 +161,7 @@
     document.getElementById("scan-results").innerHTML = "Scanning in progress...";
     document.getElementById("scan-results").style.display = "block";
 
-    let eventSource = new EventSource("../Static/php/sqlmap.php", { withCredentials: false });
+    let eventSource = new EventSource("../Static/php/sqlmap.php"); // Open SSE connection
 
     eventSource.onmessage = function(event) {
         let resultBox = document.getElementById("scan-results");
@@ -170,16 +170,16 @@
     };
 
     eventSource.onerror = function() {
+        console.error("SSE Error: Closing connection.");
         eventSource.close();
     };
 
-    fetch("scan.php", {
+    fetch("../Static/php/sqlmap.php", {
         method: "POST",
         body: formData
-    }).then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error("Error:", error));
+    }).catch(error => console.error("Fetch Error:", error));
 });
+
 
     </script>
 
