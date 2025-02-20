@@ -1,0 +1,60 @@
+.login-form {
+    background-color: #1f1f1f; /* Dark background for the form */
+    color: #e0e0e0; /* Light text color */
+    padding: 20px;
+    border-radius: 5px;
+    width: 90%; /* Adjust width for smaller screens */
+    max-width: 300px; /* Maximum width */
+    margin: auto; /* Center the form */
+}
+
+h2 {
+    text-align: center; /* Center the heading */
+}
+
+label {
+    display: block; /* Block display for labels */
+    margin-top: 10px; /* Space above labels */
+}
+
+input {
+    width: 100%; /* Full width for input fields */
+    padding: 10px; /* Padding for input fields */
+    margin-top: 5px; /* Space above input fields */
+    border: 1px solid #ccc; /* Border for input fields */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.btn {
+    background-color: #007bff; /* Button background color */
+    color: white; /* Button text color */
+    padding: 10px; /* Padding for button */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    margin-top: 15px; /* Space above the button */
+    width: 100%; /* Full width for button */
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.forgot-password, .signup-link {
+    display: block; /* Block display for links */
+    text-align: center; /* Center align links */
+    margin-top: 10px; /* Space above links */
+    color: #007bff; /* Link color */
+    text-decoration: none; /* No underline */
+}
+
+.forgot-password:hover, .signup-link:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+/* Media query for larger screens */
+@media (min-width: 768px) {
+    .login-form {
+        width: 300px; /* Fixed width for larger screens */
+    }
+}

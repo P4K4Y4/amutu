@@ -1,0 +1,130 @@
+/* chat.css */
+body {
+    background-image: url('../../IMG/e4316a93890387.5e70ade47b737.gif'); /* Add your Matrix background image path */
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Basic styles for the chat interface */
+.chat {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #0d0d0d;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    color: #00ff00;
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.message-container {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #00ff00;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.message {
+    margin: 10px 0;
+}
+
+.message.user {
+    text-align: right;
+}
+
+.message.bot {
+    text-align: left;
+}
+
+.message p {
+    display: inline-block;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.message.user p {
+    background-color: #00ff00;
+    color: #0d0d0d;
+}
+
+.message.bot p {
+    background-color: #333;
+    color: #00ff00;
+}
+
+.input-area {
+    display: flex;
+    gap: 10px;
+}
+
+.input-area input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #00ff00;
+    border-radius: 4px;
+    background-color: #0d0d0d;
+    color: #00ff00;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.input-area button {
+    padding: 10px 15px;
+    background-color: #00ff00;
+    color: #0d0d0d;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.input-area button:hover {
+    background-color: #00cc00;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .chat {
+        max-width: 90%;
+        padding: 15px;
+    }
+
+    .message-container {
+        max-height: 300px;
+        padding: 8px;
+    }
+
+    .input-area {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .input-area input, .input-area button {
+        width: 100%;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .chat {
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    .message-container {
+        max-height: 200px;
+        padding: 5px;
+    }
+
+    .input-area input, .input-area button {
+        padding: 5px;
+    }
+}

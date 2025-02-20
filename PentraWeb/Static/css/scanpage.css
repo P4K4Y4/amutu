@@ -1,0 +1,97 @@
+/* Scan Input Styles */
+.scan-input {
+    margin: 20px auto;
+    max-width: 600px; /* Limit width for better fit */
+    text-align: left;
+    padding: 0 10px; /* Add padding for smaller screens */
+}
+
+.scan-input label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.scan-input input, 
+.scan-input select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #1f1f1f; /* Dark background for input */
+    color: #e0e0e0; /* Light text color */
+}
+
+/* Scan Progress Styles */
+.scan-progress {
+    margin: 20px auto;
+    max-width: 600px; /* Limit width for better fit */
+    text-align: left;
+    padding: 0 10px; /* Add padding for smaller screens */
+}
+
+.progress-bar {
+    background-color: #444; /* Background for progress bar */
+    border-radius: 5px;
+    overflow: hidden;
+    height: 20px; /* Height of the progress bar */
+}
+
+.progress {
+    background-color: #1abc9c; /* Color of the progress */
+    height: 100%; /* Full height */
+    transition: width 0.3s; /* Smooth transition for progress */
+}
+
+/* Scan Results Styles */
+.scan-results {
+    margin: 20px auto;
+    max-width: 600px; /* Limit width for better fit */
+    text-align: left;
+    padding: 0 10px; /* Add padding for smaller screens */
+}
+
+#results-table {
+    width: 100%;
+    border-collapse: collapse; /* Remove space between cells */
+    margin-bottom: 10px;
+}
+
+#results-table th, 
+#results-table td {
+    border: 1px solid #444; /* Border for table cells */
+    padding: 10px;
+    text-align: left;
+}
+
+#results-table th {
+    background-color: #1f1f1f; /* Dark background for header */
+}
+
+#results-table tr:nth-child(even) {
+    background-color: #222; /* Alternate row color */
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .scan-input, .scan-progress, .scan-results {
+        max-width: 100%; /* Full width for smaller screens */
+        padding: 0 5px; /* Reduce padding for smaller screens */
+    }
+
+    #results-table th, 
+    #results-table td {
+        padding: 8px; /* Reduce padding for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .scan-input, .scan-progress, .scan-results {
+        padding: 0 2px; /* Further reduce padding for very small screens */
+    }
+
+    #results-table th, 
+    #results-table td {
+        padding: 5px; /* Further reduce padding for very small screens */
+    }
+}
