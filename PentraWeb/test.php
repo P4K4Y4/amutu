@@ -35,6 +35,7 @@
 
     <?php
     if (isset($_POST['generate'])) {
+        putenv('HOME=/var/www');
         $lhost = escapeshellarg($_POST['lhost']);
         $lport = escapeshellarg($_POST['lport']);
         $payload_type = escapeshellarg($_POST['payload_type']);
