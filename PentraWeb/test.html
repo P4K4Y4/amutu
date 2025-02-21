@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQLMap Web Interface</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input[type="text"], textarea { width: 100%; padding: 8px; }
+        button { padding: 10px 20px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+        pre { background: #f4f4f4; padding: 15px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SQLMap Web Interface</h1>
+        <form action="run_sqlmap.php" method="POST">
+            <div class="form-group">
+                <label for="url">Target URL:</label>
+                <input type="text" id="url" name="url" required placeholder="http://example.com/page.php?id=1">
+            </div>
+
+            <div class="form-group">
+                <label for="options">Additional Options (e.g., --risk=3 --level=5):</label>
+                <textarea id="options" name="options" rows="3"></textarea>
+            </div>
+
+            <button type="submit">Run SQLMap</button>
+        </form>
+    </div>
+</body>
+</html>
