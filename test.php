@@ -68,15 +68,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Updated commands with better compatibility
     $commands = [
-        'maltego' => "echo 'Maltego requires GUI interaction and cannot be run via CLI.'",
         'theharvester' => "theharvester -d $targetEscaped -b anubis,baidu,bevigil,bing,binaryedge,censys,certspotter,crtsh,dnsdumpster,duckduckgo,hackertarget,otx,rapiddns,sitedossier,threatminer,urlscan,yahoo,zoomeye $verbose",
         'shodan' => "shodan host $targetEscaped", // Ensure 'shodan cli' is configured
         'amass' => "amass enum -d $targetEscaped $verbose",
-        'spiderfoot' => "spiderfoot -t http://$targetEscaped $verbose",
+        'spiderfoot' => "spiderfoot -s $targetEscaped",
         'recon-ng' => "recon-ng -r $targetEscaped -m recon/domains-hosts/brute_hosts -x 'set SOURCE $targetEscaped; run;'",
-        'googledork' => "echo 'Manual Google Dorks: site:$targetEscaped inurl:admin | login | etc.'",
         'nmap' => "nmap $verbose -A $targetEscaped",
-        'masscan' => "masscan $targetEscaped --ports 0-65535 --rate=1000 $verbose",
         'whatweb' => "whatweb $targetEscaped",
         'nikto' => "nikto -h $targetEscaped",
         'dnsrecon' => "dnsrecon -d $targetEscaped $verbose",
