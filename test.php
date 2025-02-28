@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (isset($commands[$tool])) {
-        $filteredOutput = shell_exec("echo " . escapeshellarg($output) . " | tgpt -p 'Summarize and extract key findings from this scan result.'");
+        $filteredOutput = shell_exec("tgpt -q " . escapeshellarg($output) . "2>&1");
 
         echo $filteredOutput ?: "Failed to process output with AI.";
     } else {
