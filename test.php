@@ -75,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'recon-ng' => "recon-ng -r $targetEscaped -m recon/domains-hosts/brute_hosts -x 'set SOURCE $targetEscaped; run;'",
         'nmap' => "nmap $verbose -A $targetEscaped",
         'whatweb' => "whatweb $targetEscaped",
+        'wafw00f' => "wafw00f -a -r $targetEscaped",
         'nikto' => "nikto -h $targetEscaped",
         'dnsrecon' => "dnsrecon -d $targetEscaped $verbose",
         'fierce' => "fierce --domain $targetEscaped $verbose",
